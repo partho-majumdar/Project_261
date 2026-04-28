@@ -9,9 +9,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required"],
       trim: true,
-      maxLength: [50, "Your name cannot exceed 30 characters"],
+      maxLength: [50, "Name cannot exceed 30 characters"],
     },
-
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -22,20 +21,17 @@ const userSchema = new mongoose.Schema(
         "Please fill a valid email address",
       ],
     },
-
     password: {
       type: String,
       required: [true, "Password is required"],
       select: false,
-      minlength: [8, "Your password must be at least 8 characters long"],
+      minLength: [8, "Password must be at least 8 characters long"],
     },
-
     role: {
       type: String,
       default: "Student",
       enum: ["Student", "Teacher", "Admin"],
     },
-
     resetPasswordToken: String,
     resetPasswordExpire: Date,
 
@@ -44,38 +40,35 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: null,
     },
-
     experties: {
       type: [String],
       default: [],
     },
-
     maxStudents: {
       type: Number,
       default: 10,
-      min: [1, "Maximum students cannot be less than 1"],
+      min: [1, "Min Students must be at least 1"],
     },
-
     assignedStudents: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
-
     supervisor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
     },
-
-    projects: {
+    project: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
       default: null,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 userSchema.pre("save", async function (next) {
@@ -93,6 +86,24 @@ userSchema.methods.generateToken = function () {
 
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+userSchema.methods.hasCapacity = function () {
+  if (this.role !== "Teacher") return false;
+  return this.assignedStudents.length < this.maxStudents;
+};
+
+userSchema.methods.getResetPasswordToken = function () {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+  return resetToken;
 };
 
 export const User = mongoose.model("User", userSchema);

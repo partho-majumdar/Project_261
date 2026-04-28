@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
-import { errorMiddleware } from "./middleware/error.js";
+import { errorMiddleware } from "./middlewares/error.js";
 import authRouter from "./router/userRoutes.js";
 
 config();

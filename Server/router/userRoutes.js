@@ -1,14 +1,14 @@
 import express from "express";
 import {
   registerUser,
-  login,
-  getUser,
-  logout,
   forgotPassword,
+  getUser,
+  login,
+  logout,
   resetPassword,
 } from "../controllers/authController.js";
 import multer from "multer";
-import { isAuthenticated } from "../middleware/authMiddleware.js";
+import { isAuthenticated } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
