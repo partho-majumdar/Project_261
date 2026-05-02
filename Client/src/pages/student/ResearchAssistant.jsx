@@ -68,9 +68,7 @@ Each object must have exactly these keys:
 };
 
 async function callGemini(systemPrompt, userMessage) {
-  const API_KEY =
-    import.meta.env.VITE_GEMINI_API_KEY ||
-    "AIzaSyDbEn2ZbDuvr5X4-ORt_knogP7EhQ2FCSQ";
+  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const models = ["gemini-2.0-flash", "gemini-flash-latest"];
 
   let lastError = null;
