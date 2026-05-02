@@ -4,17 +4,14 @@ import { fetchDashboardStats } from "../../store/slices/studentSlice";
 import { Link } from "react-router-dom";
 import { Bell, MessageCircle, MessageCircleWarning } from "lucide-react";
 
-
 const StudentDashboard = () => {
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.auth);
   const { dashboardStats } = useSelector((state) => state.student);
 
-
   useEffect(() => {
     dispatch(fetchDashboardStats());
   }, [dispatch]);
-
 
   const project = dashboardStats?.project || {};
   const supervisorName = dashboardStats?.supervisorName || "N/A";
@@ -22,7 +19,6 @@ const StudentDashboard = () => {
   const topNotifications = dashboardStats?.topNotifications || [];
   const feedbackList =
     dashboardStats?.feedbackNotifications?.slice(-2).reverse() || [];
-
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "N/A";
@@ -32,7 +28,6 @@ const StudentDashboard = () => {
       year: "numeric",
     });
   };
-
 
   return (
     <div className="space-y-6">
@@ -45,7 +40,6 @@ const StudentDashboard = () => {
         </p>
       </div>
 
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="card">
           <div className="flex items-center">
@@ -56,13 +50,12 @@ const StudentDashboard = () => {
               <p className="text-xs font-medium text-[#5a8a72]">
                 Project Title
               </p>
-              <p className="text-lg font-bold text-[#c8f5e0] mt-0.5">
+              <p className="text-md font-bold text-[#c8f5e0] mt-0.5">
                 {project?.title || "No Project"}
               </p>
             </div>
           </div>
         </div>
-
 
         <div className="card">
           <div className="flex items-center">
@@ -71,13 +64,12 @@ const StudentDashboard = () => {
             </div>
             <div className="ml-4">
               <p className="text-xs font-medium text-[#5a8a72]">Supervisor</p>
-              <p className="text-lg font-bold text-[#c8f5e0] mt-0.5">
+              <p className="text-md font-bold text-[#c8f5e0] mt-0.5">
                 {supervisorName || "N/A"}
               </p>
             </div>
           </div>
         </div>
-
 
         <div className="card">
           <div className="flex items-center">
@@ -88,13 +80,12 @@ const StudentDashboard = () => {
               <p className="text-xs font-medium text-[#5a8a72]">
                 Next Deadline
               </p>
-              <p className="text-lg font-bold text-[#c8f5e0] mt-0.5">
+              <p className="text-md font-bold text-[#c8f5e0] mt-0.5">
                 {formatDate(project?.deadline)}
               </p>
             </div>
           </div>
         </div>
-
 
         <div className="card">
           <div className="flex items-center">
@@ -105,7 +96,7 @@ const StudentDashboard = () => {
               <p className="text-xs font-medium text-[#5a8a72]">
                 Recent Feedback
               </p>
-              <p className="text-lg font-bold text-[#c8f5e0] mt-0.5">
+              <p className="text-md font-bold text-[#c8f5e0] mt-0.5">
                 {feedbackList?.length
                   ? formatDate(feedbackList[0]?.createdAt)
                   : "No feedback yet"}
@@ -114,7 +105,6 @@ const StudentDashboard = () => {
           </div>
         </div>
       </div>
-
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card">
@@ -169,7 +159,6 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-
         <div className="card">
           <div className="card-header flex items-center justify-between">
             <h2 className="card-title">Latest Feedback</h2>
@@ -180,7 +169,6 @@ const StudentDashboard = () => {
               View All
             </Link>
           </div>
-
 
           {feedbackList && feedbackList.length > 0 ? (
             <div className="space-y-4">
@@ -224,7 +212,6 @@ const StudentDashboard = () => {
         </div>
       </div>
 
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card">
           <div className="card-header">
@@ -261,7 +248,6 @@ const StudentDashboard = () => {
           )}
         </div>
 
-
         <div className="card">
           <div className="card-header">
             <h2 className="card-title">Recent Notifications</h2>
@@ -293,6 +279,5 @@ const StudentDashboard = () => {
     </div>
   );
 };
-
 
 export default StudentDashboard;
