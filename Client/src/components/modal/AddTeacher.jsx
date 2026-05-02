@@ -19,18 +19,147 @@ const AddTeacher = () => {
     maxStudents: 1,
   });
 
+  // Expertise options based on department
+  const expertiseByDepartment = {
+    "Computer Science": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Data Science",
+      "Cybersecurity",
+      "Cloud Computing",
+      "Software Development",
+      "Web Development",
+      "Mobile App Development",
+      "Database Systems",
+      "Computer Networks",
+      "Operating Systems",
+      "Human-Computer Interaction",
+      "Big Data Analytics",
+      "Blockchain Technology",
+      "Internet of Things (IoT)",
+    ],
+    "Software Engineering": [
+      "Software Architecture",
+      "Agile Methodologies",
+      "DevOps",
+      "Software Testing",
+      "Requirements Engineering",
+      "Software Design Patterns",
+      "Version Control Systems",
+      "Continuous Integration/Deployment",
+    ],
+    "Information Technology": [
+      "Network Administration",
+      "System Administration",
+      "IT Infrastructure",
+      "Cloud Services",
+      "Virtualization",
+      "IT Security",
+      "Database Management",
+      "Enterprise Systems",
+    ],
+    "Data Science": [
+      "Statistical Analysis",
+      "Machine Learning",
+      "Deep Learning",
+      "Data Visualization",
+      "Natural Language Processing",
+      "Predictive Modeling",
+      "Big Data Technologies",
+      "Data Mining",
+    ],
+    "Electrical Engineering": [
+      "Power Systems",
+      "Control Systems",
+      "Signal Processing",
+      "Electronics",
+      "Circuit Design",
+      "Renewable Energy",
+      "Electric Machines",
+      "Power Electronics",
+      "Embedded Systems",
+      "Telecommunications",
+    ],
+    "Mechanical Engineering": [
+      "Thermodynamics",
+      "Fluid Mechanics",
+      "Heat Transfer",
+      "Manufacturing Processes",
+      "CAD/CAM",
+      "Robotics",
+      "Mechatronics",
+      "Material Science",
+      "Automotive Engineering",
+      "HVAC Systems",
+    ],
+    "Civil Engineering": [
+      "Structural Engineering",
+      "Geotechnical Engineering",
+      "Transportation Engineering",
+      "Environmental Engineering",
+      "Water Resources",
+      "Construction Management",
+      "Surveying",
+      "Urban Planning",
+      "Earthquake Engineering",
+    ],
+    "Business Administration": [
+      "Strategic Management",
+      "Marketing",
+      "Finance",
+      "Human Resources",
+      "Operations Management",
+      "Entrepreneurship",
+      "International Business",
+      "Supply Chain Management",
+      "Organizational Behavior",
+    ],
+    Economics: [
+      "Microeconomics",
+      "Macroeconomics",
+      "Econometrics",
+      "International Economics",
+      "Development Economics",
+      "Financial Economics",
+      "Labor Economics",
+      "Public Economics",
+    ],
+    Psychology: [
+      "Clinical Psychology",
+      "Cognitive Psychology",
+      "Developmental Psychology",
+      "Social Psychology",
+      "Educational Psychology",
+      "Organizational Psychology",
+      "Neuropsychology",
+      "Research Methods",
+      "Counseling Psychology",
+    ],
+  };
+
   const handleCreateTeacher = (e) => {
     e.preventDefault();
     dispatch(createTeacher(formData));
     setFormData({
       name: "",
       email: "",
-      department: "",
+      department: "Computer Science",
       password: "",
-      experties: "",
+      experties: "Artificial Intelligence",
       maxStudents: 1,
     });
     dispatch(toggleTeacherModal());
+  };
+
+  // Handle department change and reset expertise
+  const handleDepartmentChange = (e) => {
+    const newDepartment = e.target.value;
+    const newExpertiseOptions = expertiseByDepartment[newDepartment];
+    setFormData({
+      ...formData,
+      department: newDepartment,
+      experties: newExpertiseOptions[0], // Set to first expertise option
+    });
   };
 
   return (
@@ -90,9 +219,7 @@ const AddTeacher = () => {
                 className="input w-full"
                 required
                 value={formData.department}
-                onChange={(e) =>
-                  setFormData({ ...formData, department: e.target.value })
-                }
+                onChange={handleDepartmentChange}
               >
                 <option value="Computer Science">Computer Science</option>
                 <option value="Software Engineering">
@@ -127,33 +254,13 @@ const AddTeacher = () => {
                   setFormData({ ...formData, experties: e.target.value })
                 }
               >
-                <option value="Artificial Intelligence">
-                  Artificial Intelligence
-                </option>
-                <option value="Machine Learning">Machine Learning</option>
-                <option value="Data Science">Data Science</option>
-                <option value="Cybersecurity">Cybersecurity</option>
-                <option value="Cloud Computing">Cloud Computing</option>
-                <option value="Software Development">
-                  Software Development
-                </option>
-                <option value="Web Development">Web Development</option>
-                <option value="Mobile App Development">
-                  Mobile App Development
-                </option>
-                <option value="Database Systems">Database Systems</option>
-                <option value="Computer Networks">Computer Networks</option>
-                <option value="Operating Systems">Operating Systems</option>
-                <option value="Human-Computer Interaction">
-                  Human-Computer Interaction
-                </option>
-                <option value="Big Data Analytics">Big Data Analytics</option>
-                <option value="Blockchain Technology">
-                  Blockchain Technology
-                </option>
-                <option value="Internet of Things (IoT)">
-                  Internet of Things (IoT)
-                </option>
+                {expertiseByDepartment[formData.department]?.map(
+                  (expertise, index) => (
+                    <option key={index} value={expertise}>
+                      {expertise}
+                    </option>
+                  ),
+                )}
               </select>
             </div>
 
