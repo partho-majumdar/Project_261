@@ -2,8 +2,6 @@
 
 <div align="center">
 
-# 📋 Project Management System
-
 ### A Modern MERN Stack-Based Project Collaboration Platform
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Database-green?style=for-the-badge&logo=mongodb)
