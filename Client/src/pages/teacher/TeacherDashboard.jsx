@@ -3,19 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTeacherDashboardStats } from "../../store/slices/teacherSlice";
 import { CheckCircle, Clock, Loader, MoveDiagonal, Users } from "lucide-react";
 
-
 const TeacherDashboard = () => {
   const dispatch = useDispatch();
-
 
   const { dashboardStats, loading } = useSelector((state) => state.teacher);
   const { authUser } = useSelector((state) => state.auth);
 
-
   useEffect(() => {
     dispatch(getTeacherDashboardStats());
   }, [dispatch]);
-
 
   const statsCards = [
     {
@@ -44,7 +40,6 @@ const TeacherDashboard = () => {
     },
   ];
 
-
   return (
     <div className="space-y-6">
       <div className="bg-gradient-to-r from-[#00e560] to-[#009940] rounded-2xl p-6 text-[#0a0f0d]">
@@ -53,7 +48,6 @@ const TeacherDashboard = () => {
           Manage your students and provide guidance on their projects.
         </p>
       </div>
-
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {statsCards.map(
@@ -75,13 +69,11 @@ const TeacherDashboard = () => {
         )}
       </div>
 
-
       <div className="card">
         <div className="card-header">
           <h2 className="card-title">Recent Activity</h2>
           <p className="card-subtitle">Latest notifications and updates</p>
         </div>
-
 
         <div className="space-y-4">
           {loading ? (
@@ -118,11 +110,4 @@ const TeacherDashboard = () => {
   );
 };
 
-
 export default TeacherDashboard;
-
-
-
-
-
-
